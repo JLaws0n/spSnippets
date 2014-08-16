@@ -7,15 +7,15 @@ SP Snippets: This is an online storage location for information related to Share
 
 <table>
 <tr>
-  <td>Fiddler: 
+  <td><b>Fiddler: </b></td>
   <td>http://www.telerik.com/fiddler</td>
 </tr>
 <tr>
-  <td>JSOM FIDDLE: </td>
+  <td><b>JSOM FIDDLE: </b></td>
   <td>https://github.com/TheKidVince/JSOM-Fiddle</td>
 </tr>
 <tr>
-  <td>LINQPAD:</td> 
+  <td><b>LINQPAD:</b></td> 
   <td>http://www.linqpad.net/</td>
 </tr>
 </table>
