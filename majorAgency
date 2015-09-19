@@ -1,0 +1,406 @@
+Sub majorAgency()
+'****************************************************************
+'Federal Agency Organization Structure
+'Source: Federal Procurement Data Center
+'Modification:
+'Developer: Jerry Lawson
+'Date: November 27, 2009
+'================================================================
+
+'****************************************************************
+'Spreadsheet Position Awareness - Determines last row and column
+'****************************************************************
+    finalRow = Cells(Rows.Count, 1).End(xlUp).Row
+    finalCol = Cells(1, Columns.Count).End(xlToLeft).Row
+'================================================================
+
+'****************************************************************
+'Formats columns as text
+'****************************************************************
+    Columns("D:F").Select
+    Selection.NumberFormat = "@"
+    Range("D2").Select
+'================================================================
+
+'****************************************************************
+'Begin processing loop
+'****************************************************************
+    For i = 1 To finalRow - 1
+'================================================================
+
+'****************************************************************
+'Initializing Variables
+'****************************************************************
+    orgType = Trim(ActiveCell.Offset(0, -3).Value)
+    orgCodeSize = Len(Trim(ActiveCell.Offset(0, -3).Value)) 'Determines number of characters for org code
+    A = Left(orgType, 2) 'selects the first 2 characters of org code
+    b = Left(orgType, 4) '
+    C = Right(b, 2)
+    X = ActiveCell.Offset(0, -3).Value
+    orgID = Left(orgType, 2)
+    
+    'Determine Branch
+
+    
+    If orgCodeSize <= 3 Then
+            orgCode = "0000"
+            Branch = "Legislative Branch"
+            deptName = "Congress"
+            Acronym = "Congress"
+            
+    ElseIf orgCodeSize = 4 Then
+Select Case orgType
+        Case "1000"
+            orgCode = orgType
+            Branch = "Judicial Branch"
+            deptName = "Courts"
+            Acronym = "Courts"
+        Case "1100"
+            orgCode = orgType
+            Branch = "Executive Branch"
+            deptName = "Office of the US President"
+            Acronym = "POTUS"
+        Case "1200"
+            orgCode = orgType
+            Branch = "Executive Agency"
+            deptName = "Department of Agriculture"
+            Acronym = "USDA"
+        Case "1300"
+            orgCode = orgType
+            Branch = "Executive Agency"
+            deptName = "Department of Commerce"
+            Acronym = "DOC"
+        Case "1400"
+            orgCode = orgType
+            Branch = "Executive Agency"
+            deptName = "Department of the Interior"
+            Acronym = "DOI"
+        Case "1500"
+            orgCode = orgType
+            Branch = "Executive Agency"
+            deptName = "Department of Justice"
+            Acronym = "DOJ"
+        Case "1600"
+            orgCode = orgType
+            Branch = "Executive Agency"
+            deptName = "Department of Labor"
+            Acronym = "DOL"
+        Case "1700"
+            orgCode = orgType
+            Branch = "Department of Defense"
+            deptName = "Department of the Navy"
+            Acronym = "US Navy"
+        Case "1800"
+            orgCode = orgType
+            Branch = "Executive Agency"
+            deptName = "U.S. Postal Service"
+            Acronym = "USPS"
+        Case "1900"
+            orgCode = orgType
+            Branch = "Executive Agency"
+            deptName = "Department of State"
+            Acronym = "DOS"
+        Case "2000"
+            Branch = "Executive Agency"
+            deptName = "Department of Treasury"
+            Acronym = "Treasury"
+        Case "2100"
+            orgCode = orgType
+            Branch = "Department of Defense"
+            deptName = "Department of the Army"
+            Acronym = "US Army"
+         Case "2200"
+            Branch = "N/A"
+            deptName = "N/A"
+            Acronym = "N/A"
+        Case "2300"
+            orgCode = orgType
+            Branch = "Executive Agency"
+            deptName = "Department of Treasury"
+            Acronym = "Treasury"
+        Case "2400"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Office of Personnel Management"
+            Acronym = "OPM"
+        Case "2500"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "National Credit Union Administration"
+            Acronym = "NCUA"
+        Case "2600"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Federal Retirement Thrift Investment Board"
+            Acronym = "NRTIB"
+        Case "2700"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Federal Communications Commission"
+            Acronym = "FCC"
+        Case "2800"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Social Security Administration"
+            Acronym = "SSA"
+        Case "2900"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Federal Trade Commission"
+            Acronym = "FTC"
+        Case "3000"
+            orgCode = orgType
+            Branch = "N/A"
+            deptName = "N/A"
+            Acronym = "N/A"
+        Case "3100"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Nuclear Regulatory Commission"
+            Acronym = "NRC"
+        Case "3300"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Smithsonian Institution"
+            Acronym = "SI"
+        Case "3400"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "United States International Trade Commission"
+            Acronym = "USITC"
+        Case "3600"
+            orgCode = orgType
+            Branch = "Executive Agency"
+            deptName = "Department of Veterans Affairs"
+            Acronym = "VA"
+        Case "4100"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Merit Systems Protection Board"
+            Acronym = "MSPB"
+        Case "4500"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Equal Employment Opportunity Commission"
+            Acronym = "EEOC"
+        Case "4600"
+            orgCode = orgType
+            Branch = "N/A"
+            deptName = "N/A"
+            Acronym = "N/A"
+        Case "4602"
+            orgCode = orgType
+            Branch = "N/A"
+            deptName = "N/A"
+            Acronym = "N/A"
+        Case "4607"
+            orgCode = orgType
+            Branch = "N/A"
+            deptName = "N/A"
+            Acronym = "N/A"
+        Case "4700"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "General Services Administration"
+            Acronym = "GSA"
+        Case "4800"
+            orgCode = orgType
+            Branch = "N/A"
+            deptName = "N/A"
+            Acronym = "N/A"
+        Case "4900"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "National Science Foundation"
+            Acronym = "NSF"
+        Case "5000"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Securities and Exchange Commission"
+            Acronym = "SEC"
+        Case "5100"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Federal Deposit Insurance Corporation"
+            Acronym = "FDIC"
+        Case "5400"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Federal Labor Relations Authority"
+            Acronym = "FLRA"
+        Case "5600"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Central Intelligence Agency"
+            Acronym = "CIA"
+        Case "5700"
+            orgCode = orgType
+            Branch = "Department of Defense"
+            deptName = "Department of the Air Force"
+            Acronym = "USAF"
+        Case "5800"
+            Branch = "N/A"
+            deptName = "N/A"
+            Acronym = "N/A"
+        Case "5900"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "National Foundation on the Arts and the Humanities"
+            Acronym = "NFAH"
+        Case "6000"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Railroad Retirement Board"
+            Acronym = "RRB"
+        Case "6100"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Consumer Product Safety Commission"
+            Acronym = "CPSC"
+        Case "6200"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Office of Special Counsel"
+            Acronym = "OSC"
+        Case "6300"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "National Labor Relations Board"
+            Acronym = "NLRB"
+        Case "6400"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Tennessee Valley Authority"
+            Acronym = "TVA"
+        Case "6500"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Federal Maritime Commission"
+            Acronym = "FMC"
+        Case "6800"
+            orgCode = orgType
+            Branch = "Executive Agency"
+            deptName = "Environmental Protection Agency"
+            Acronym = "EPA"
+        Case "6900"
+            orgCode = orgType
+            Branch = "Executive Agency"
+            deptName = "Department of Transportation"
+            Acronym = "DOT"
+        Case "7000"
+            orgCode = orgType
+            Branch = "Executive Agency"
+            deptName = "Department of Homeland Security"
+            Acronym = "DHS"
+        Case "7100"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Overseas Private Investment Corporation"
+            Acronym = "OPIC"
+        Case "7200"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "U.S. Agency for International Development"
+            Acronym = "USAID"
+        Case "7300"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Small Business Administration"
+            Acronym = "SBA"
+        Case "7400"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "American Battle Monuments Commission"
+            Acronym = "ABMC"
+        Case "7500"
+            orgCode = orgType
+            Branch = "Executive Agency"
+            deptName = "Department of Health and Human Services"
+            Acronym = "DHHS"
+        Case "7600"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Christopher Columbus Fellowship Foundation"
+            Acronym = "CCFF"
+        Case "7800"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Farm Credit Administration"
+            Acronym = "FCA"
+        Case "8000"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "National Aeronautics and Space Administration"
+            Acronym = "NASA"
+        Case "8291"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Neighborhood Reinvestment Corporation"
+            Acronym = "NRC"
+        Case "8300"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Export-Import Bank of the U.S."
+            Acronym = "EIB"
+        Case "8400"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "United States Soldiers' and Airmen's Home"
+            Acronym = "USSAH"
+        Case "8600"
+            orgCode = orgType
+            Branch = "Executive Agency"
+            deptName = "Department of Housing and Urban Development"
+            Acronym = "HUD"
+        Case "8800"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "National Archives and Records Administration"
+            Acronym = "NARA"
+        Case "8900"
+            orgCode = orgType
+            Branch = "Executive Agency"
+            deptName = "Department of Energy"
+            Acronym = "DOE"
+        Case "9000"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Selective Service System"
+            Acronym = "SSS"
+        Case "9100"
+            orgCode = orgType
+            Branch = "Executive Agency"
+            deptName = "Department of Education"
+            Acronym = "Education"
+        Case "9300"
+            orgCode = orgType
+            Branch = "Other Government"
+            deptName = "Federal Mediation and Conciliation Service"
+            Acronym = "FMCS"
+        Case "9500"
+            orgCode = orgType
+            Branch = "N/A"
+            deptName = "N/A"
+            Acronym = "N/A"
+        Case "9600"
+            orgCode = orgType
+            Branch = "N/A"
+            deptName = "N/A"
+            Acronym = "N/A"
+        Case "9700"
+            orgCode = orgType
+            Branch = "Department of Defense"
+            deptName = "Department of Defense"
+            Acronym = "DOD"
+    End Select
+    End If
+    
+    ActiveCell.Value = orgCode
+    ActiveCell.Offset(0, -1).Value = Branch
+    ActiveCell.Offset(0, 1).Value = deptName
+    ActiveCell.Offset(0, 2).Value = Acronym
+    ActiveCell.Offset(1, 0).Select
+    Next i
+    
+End Sub
+
