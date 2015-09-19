@@ -11,7 +11,7 @@ Sub majorAgency()
 'Spreadsheet Position Awareness - Determines last row and column
 '****************************************************************
     finalRow = Cells(Rows.Count, 1).End(xlUp).Row
-    finalCol = Cells(1, Columns.Count).End(xlToLeft).Row
+    finalCol = Cells(1, Columns.Count).End(xlToLeft).Columns
 '================================================================
 
 '****************************************************************
