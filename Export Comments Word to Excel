@@ -1,0 +1,42 @@
+Sub CopyCommentsToExcel()
+'Create in Word VBA
+'TODO: set a reference to the Excel object library (Tools --> Reference --> Microsoft Excel 12.0 Object library)
+
+Dim xlApp As Excel.Application
+Dim xlWB As Excel.Workbook
+Dim i As Integer
+Dim HeadingRow As Integer
+HeadingRow = 3
+
+Dim cmtRef As Range
+
+Set xlApp = CreateObject("Excel.Application")
+xlApp.Visible = True
+Set xlWB = xlApp.Workbooks.Add ' create a new workbook
+With xlWB.Worksheets(1)
+' Create report info
+    .Cells(1, 1).Formula = "Reviewed document:"
+
+' Create Heading
+    .Cells(HeadingRow, 1).Formula = "Index"
+    .Cells(HeadingRow, 2).Formula = "Page"
+    .Cells(HeadingRow, 3).Formula = "Line"
+    .Cells(HeadingRow, 4).Formula = "Comment"
+    .Cells(HeadingRow, 5).Formula = "Reviewer"
+    .Cells(HeadingRow, 6).Formula = "Date"
+    For i = 1 To ActiveDocument.Comments.Count
+        .Cells(2, 1).Formula = ActiveDocument.Comments(i).Parent
+        .Cells(i + HeadingRow, 1).Formula = ActiveDocument.Comments(i).Index
+        .Cells(i + HeadingRow, 2).Formula = ActiveDocument.Comments(i).Reference.Information(wdActiveEndAdjustedPageNumber)
+        .Cells(i + HeadingRow, 3).Formula = ActiveDocument.Comments(i).Reference.Information(wdFirstCharacterLineNumber)
+        .Cells(i + HeadingRow, 4).Formula = ActiveDocument.Comments(i).Range
+        .Cells(i + HeadingRow, 5).Formula = ActiveDocument.Comments(i).Initial
+        .Cells(i + HeadingRow, 6).Formula = Format(ActiveDocument.Comments(i).Date, "dd/MM/yyyy")
+        '        .Cells(i + 1, 3).Formula = ActiveDocument.Comments(i).Parent
+        '        .Cells(i + 1, 3).Formula = ActiveDocument.Comments(i).Application
+        '        .Cells(i + 1, 7).Formula = ActiveDocument.Comments(i).Author
+    Next i
+End With
+Set xlWB = Nothing
+Set xlApp = Nothing
+End Sub
