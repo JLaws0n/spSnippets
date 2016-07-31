@@ -1,0 +1,102 @@
+Break a presentation up into several smaller presentations
+
+Problem
+
+You have a large presentation that's
+
+Getting so big that it takes forever to open and save each time you want to make a change
+Getting too big to email
+Just getting too big
+You want to split it into several smaller presentations. You can do it manually, of course; make several copies of your original presentation, open each in turn and delete all but the slides you want to leave in it, then save.
+
+Or you can let VBA do the job for you automatically. Read on ...
+
+Solution
+
+This VBA routine will ask how many slides you want per presentation, then will split your presentation into several sub-presentations, each with the number of slides you requested, each named to reflect the slide numbers it contains.
+
+For example, if your original file MySlides.PPT contains 55 slides and you ask SplitFile to split it to 25 slides per file, you'll get:
+
+MySlides_1-25.PPT
+MySlides_26-50.PPT
+MySlides_51-55.PPT
+The new files will be saved to the same folder as the original file. The original file will not be altered.
+
+Sub SplitFile()
+
+    Dim lSlidesPerFile As Long
+    Dim lTotalSlides As Long
+    Dim oSourcePres As Presentation
+    Dim otargetPres As Presentation
+    Dim sFolder As String
+    Dim sExt As String
+    Dim sBaseName As String
+    Dim lCounter As Long
+    Dim lPresentationsCount As Long     ' how many will we split it into
+    Dim x As Long
+    Dim lWindowStart As Long
+    Dim lWindowEnd As Long
+    Dim sSplitPresName As String
+
+    On Error GoTo ErrorHandler
+
+    Set oSourcePres = ActivePresentation
+    If Not oSourcePres.Saved Then
+        MsgBox "Please save your presentation then try again"
+        Exit Sub
+    End If
+
+    lSlidesPerFile = CLng(InputBox("How many slides per file?", "Split Presentation"))
+    lTotalSlides = oSourcePres.Slides.Count
+    sFolder = ActivePresentation.Path & "\"
+    sExt = Mid$(ActivePresentation.Name, InStr(ActivePresentation.Name, ".") + 1)
+    sBaseName = Mid$(ActivePresentation.Name, 1, InStr(ActivePresentation.Name, ".") - 1)
+
+    If (lTotalSlides / lSlidesPerFile) - (lTotalSlides \ lSlidesPerFile) > 0 Then
+        lPresentationsCount = lTotalSlides \ lSlidesPerFile + 1
+    Else
+        lPresentationsCount = lTotalSlides \ lSlidesPerFile
+    End If
+
+    If Not lTotalSlides > lSlidesPerFile Then
+        MsgBox "There are fewer than " & CStr(lSlidesPerFile) & " slides in this presentation."
+        Exit Sub
+    End If
+
+    For lCounter = 1 To lPresentationsCount
+
+        ' which slides will we leave in the presentation?
+        lWindowEnd = lSlidesPerFile * lCounter
+        If lWindowEnd > oSourcePres.Slides.Count Then
+            ' odd number of leftover slides in last presentation
+            lWindowEnd = oSourcePres.Slides.Count
+            lWindowStart = ((oSourcePres.Slides.Count \ lSlidesPerFile) * lSlidesPerFile) + 1
+        Else
+            lWindowStart = lWindowEnd - lSlidesPerFile + 1
+        End If
+
+        ' Make a copy of the presentation and open it
+        sSplitPresName = sFolder & sBaseName & _
+               "_" & CStr(lWindowStart) & "-" & CStr(lWindowEnd) & "." & sExt
+        oSourcePres.SaveCopyAs sSplitPresName, ppSaveAsDefault
+        Set otargetPres = Presentations.Open(sSplitPresName, , , True)
+
+        With otargetPres
+            For x = .Slides.Count To lWindowEnd + 1 Step -1
+                .Slides(x).Delete
+            Next
+            For x = lWindowStart - 1 To 1 Step -1
+                .Slides(x).Delete
+            Next
+            .Save
+            .Close
+        End With
+
+    Next    ' lpresentationscount
+
+NormalExit:
+    Exit Sub
+ErrorHandler:
+    MsgBox "Error encountered"
+    Resume NormalExit
+End Sub
