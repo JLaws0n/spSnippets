@@ -1,0 +1,193 @@
+<style>
+
+#s4-titlerow{
+	display: none;
+}
+#appdir{
+	font: 15px/19px "Segoe WPC", "Segoe UI", Helvetica, Arial, "Arial Unicode MS", Sans-Serif;
+	padding-top: 9px;
+	width: 960px;
+}
+#menuNav{
+	float: left;
+	width: 170px;
+	padding-left: 9px;
+}
+#contentNav{
+	float:left;
+}
+#applist > ul{
+	list-style: none outside none;
+	padding-left: 0;
+}
+#applist > ul.apps, li{
+	margin-bottom: 9px;
+	overflow: hidden;
+}
+#applist > ul.apps, li, a{
+	text-decoration: none;
+}
+#applist > ul.apps, li, a:hover{
+	color: red;
+}
+#applist > h1{
+	margin-top: 12px;
+	color: #333333;
+	font: 36px/42px "Segoe WPC Light", "Segoe UI Light", Helvetica, Arial, Sans-Serif;
+}
+#appbox{
+	width: 900px;
+	height: 900px;
+}
+#appbox > ul{
+	list-style: none;
+	overflow: hidden;
+	margin: 0 auto;
+	padding: 10px;
+}
+#appbox > ul.apps li{
+	width: 150px;
+	height: 150px;
+	margin-bottom: 9px;
+	margin-left: 12px;
+	padding-bottom: 4px;
+	padding-left: 4px;
+	float: left;
+	position: relative;
+	color: white;
+}
+#appbox > ul.apps, li, a{
+	color: white;
+	text-decoration: none;
+}
+#appbox > ul.apps, li, a:hover{
+}
+.tileTitle{
+	bottom: 8px;
+	left: 6px;
+	position: absolute;
+	font-size: 18px;
+	font-weight: bold;
+}
+.tileSubtitle{
+	font-size: 13px;
+	position: absolute;
+	top: 4px;
+	left: 6px;
+}
+.theme_blue{
+	background-color: #211b1b;
+}
+
+</style>
+
+<script type="text/javascript" src="/Scripts/jquery-1.4.2.min.js"></script>
+<script>
+
+var sites;
+
+ExecuteOrDelayUntilScriptLoaded(loadSites, 'SP.js');
+
+function loadSites()
+{
+	var context = new SP.ClientContext.get_current();
+	if(context != undefined && context != null) {
+		var web = context.get_web();
+		this.sites = web.getSubwebsForCurrentUser(null);
+		context.load(this.sites);
+		
+		context.executeQueryAsync(
+			Function.createDelegate(this, this.onSuccess),
+			Function.createDelegate(this, this.onFailed));
+	}
+}
+
+function onSuccess()
+{
+	var items = this.sites.getEnumerator();
+	//var menuNavContent = '';
+	var contentNavContent = '';
+
+	/*menuNavContent += '<div id="applist">';
+	  menuNavContent += '<h1>Apps</h1>';
+	  menuNavContent += '<ul class="apps">';*/
+	
+	contentNavContent += '<div id="appbox">';
+	contentNavContent += '<ul class="apps">';
+	var counter = 1;
+
+	while(items.moveNext())
+	{
+		try
+		{
+			var item = items.get_current();
+			var itemUrl = item.get_serverRelativeUrl();
+			var title = item.get_title();
+			var lastItemModified = getModifiedDateString(new Date(item.get_lastItemModifiedDate()));
+	
+			//menuNavContent += '<li>';
+			//menuNavContent += '<a href="' + itemUrl + '">' + title + '</a>';
+			//menuNavContent += '</li>';
+	
+			contentNavContent += '<div style="cursor:pointer;" onclick="';
+			contentNavContent += "location.href='" + itemUrl + "';";
+			contentNavContent += '">';
+			contentNavContent += '<li class="theme_blue">';
+			contentNavContent += '<div>';
+
+			contentNavContent += '<div class="tileTitle">' + title + '</div>';
+			contentNavContent += '<div class="tileSubtitle">' + lastItemModified + '</div>';
+	
+			contentNavContent += '</div>';
+			contentNavContent += '</li>';
+			contentNavContent += '</div>';
+		}
+		catch(err)
+		{
+			//menuNavContent = err.name;
+			contentNavContent = err.message;
+		}
+	}
+
+	//menuNavContent += '</ul>';
+	//menuNavContent += '</div>';
+	//$('#menuNav').html(menuNavContent);
+	
+	contentNavContent += '</ul>';
+	contentNavContent += '</div>';
+	$('#contentNav').html(contentNavContent);
+}
+
+function getModifiedDateString(date)
+{
+	var rc = "";
+	rc += (date.getMonth()+1).toString();
+	rc += "/";
+	rc += date.getDate().toString();
+	rc += "/";
+	rc += date.getFullYear().toString();
+	rc += " at ";
+	rc += date.getHours().toString();
+	rc += ":";
+	rc += date.getMinutes();
+	if(date.getHours() > 11)
+	{
+		rc += " PM";
+	}
+	else
+	{
+		rc += " AM";
+	}
+	return rc;
+}
+
+function onFailed(sender, args)
+{
+	//$('#menuNav').html(args.get_message());
+}
+
+</script>
+
+<div id="appdir">
+	<div id="contentNav"></div>
+</div>
