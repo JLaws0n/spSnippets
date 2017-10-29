@@ -1,0 +1,37 @@
+<style>
+.ms-acal-header TD {
+	VERTICAL-ALIGN: top
+}
+.ms-acal-rootdiv TD {
+	VERTICAL-ALIGN: top
+}
+.ms-acal-rootdiv TH {
+	VERTICAL-ALIGN: top
+}
+.ms-acal-rootdiv {
+	FLOAT: right; MARGIN-LEFT: 0px; OVERFLOW: hidden
+}
+.ms-acal-vitem {
+	BACKGROUND-COLOR: #f2f2f2; VISIBILITY: hidden
+}
+.ms-acal-month-weeksel {
+	WIDTH: 16px; VISIBILITY: hidden
+}
+.ms-acal-summary-dayrow TH {
+	BORDER-BOTTOM: #b6c5c6 0px solid; BORDER-LEFT: #b6c5c6 0px solid; BACKGROUND-COLOR: #ced8d9; VISIBILITY: hidden; BORDER-TOP: #b6c5c6 0px solid; CURSOR: pointer; BORDER-RIGHT: #b6c5c6 0px solid
+}
+.ms-acal-month-top {
+	BORDER-BOTTOM: #b6c5c6 1px solid; TEXT-ALIGN: center; PADDING-BOTTOM: 2px; PADDING-LEFT: 2px; WIDTH: 2em; PADDING-RIGHT: 2px; COLOR: #919649; PADDING-TOP: 2px
+}
+.ms-acal-summary-dayrow TH {
+	BORDER-BOTTOM: #b6c5c6 1px solid; BORDER-LEFT: #b6c5c6 1px solid; BACKGROUND-COLOR: #ced8d9; HEIGHT: 2em; BORDER-TOP: #b6c5c6 1px solid; CURSOR: pointer; BORDER-RIGHT: #b6c5c6 1px solid
+}
+.ms-acal-summary-itemrow TD DIV {
+	MARGIN: 0px 1px; WIDTH: 2em; HEIGHT: 2em
+}
+.ms-acal-vlink IMG {
+	VISIBILITY: hidden; MARGIN-RIGHT: 3px
+}
+.ms-acal-vlink A:hover {
+	VISIBILITY: hidden
+}</style>
