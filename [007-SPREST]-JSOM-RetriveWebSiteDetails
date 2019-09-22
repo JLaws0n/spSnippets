@@ -1,0 +1,43 @@
+README: Create file and save into Site Assets. Create Page w/CEWP, reference file in CEWP.
+
+HTML code-
+---------------------------------------------------------------------------------------------------------------------
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://onlysharepoint2013.sharepoint.com/sites/Raju/SiteAssets/Preetihtml/SpProperties.js"></script>
+<head>
+<meta charset="utf-8" />
+<title></title>
+</head>
+<body>
+<h2>Retrive Web Site Details</h2>
+Site Title: <p id="pTitle"></p>
+Site description: <p id="pdescript"></p>
+Site template: <p id="ptemp"></p>
+</body>
+</html>
+
+JS Code-
+---------------------------------------------------------------------------------------------------------------------
+// JavaScript source code
+ExecuteOrDelayUntilScriptLoaded(clickMethod, 'sp.js');
+$(document).ready(function () {
+});
+var site;
+function clickMethod() {
+var clientContext = new SP.ClientContext.get_current();
+site = clientContext.get_web();
+clientContext.load(site);
+clientContext.executeQueryAsync(success, failure);
+}
+function success() {
+$("#pTitle").html(site.get_title());
+$("#pdescript").html(site.get_description());
+$("#ptemp").html(site.get_webTemplate());
+}
+function failure() {
+alert("Failure!");
+}
+
+
