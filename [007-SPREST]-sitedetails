@@ -1,5 +1,0 @@
-Lists Details
-
-Get list by Title
--http://server/site/_api/lists/getbytitle(‘listname’)
-

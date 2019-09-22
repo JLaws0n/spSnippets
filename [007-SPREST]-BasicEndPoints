@@ -1,0 +1,32 @@
+Lists Details
+
+Get list by Title
+-http://server/site/_api/lists/getbytitle(‘listname’)
+
+URL	        	 
+
+Details|Method
+Get data from SharePoint list|GET
+/_api/Web/Lists/getbytitle(‘yourListName’)	
+
+Get List Item by Column Value|GET
+/_api/web/Lists/getByTitle(‘Student’)/items?$filter=’Internal Name of the column’ eq “Some value	
+
+Getting data and adding data in a list/GET/POST
+/_api/Web/Lists/getbytitle(‘listname’)/Items
+/_api/web/lists/getbytitle(‘listname’)
+
+Get, update and delete a single item	GET, PUT, PATCH, MERGE, DELETE
+/GetItemById(itemId)
+
+Retrieve lookup value	   GET/POST
+/_api/web/lists/getbytitle(‘listname’)/Items/?$select=Title,FieldName/Id&$expand= FieldName /Id	
+
+Update records	POST/MERGE
+/_api/web/lists/GetByTitle(‘Your List Name’)/items(Your record ID)	
+/_api/web/lists/GetByTitle(‘Your List Name’)/items(Your record ID)	Delete Records	POST/DELETE
+$filter=AuthorId eq <UserId>  	Get list item created by logged in user	          GET
+$filter=StartDate ge datetime'” + today.toISOString()  	Filter date based on Start Date	          GET
+/_api/lists/getbytitle (‘’listname’)/items?$orderby=Title	
+Getting data order by column	       GET
+/_api/web/lists/getbytitle(‘StoryDate’)/Items?$filter=Created leq ’11/24/2015′	Filter date using created column	          GET
