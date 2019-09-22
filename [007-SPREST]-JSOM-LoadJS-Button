@@ -1,1 +1,60 @@
+Jsom Code in Script Editor Web part
+
+Test for JS
+-Embed in SCRIPT Editor WP
+-------------------------------------------------------------------------------
+<input type='button' value='Load JavaScript' onclick="clickMethod();"/>
+<br />
+<script language="javascript" type="text/javascript">
+function clickMethod() {
+alert('hello');
+}
+</script>
+
+Call jsom code in Button click in SharePoint Online
+-------------------------------------------------------------------------------
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+$("#btnClick").click(function(){
+yFunction();
+});
+});
+function myFunction()
+{
+//Your jsom code will be here
+var clientContext = new SP.ClientContext.get_current();
+site=clientContext.get_web();
+clientContext.load(site);
+clientContext.executeQueryAsync(success, failure);
+}
+function success() {
+alert(site.get_title());
+}
+function failure() {
+alert("Failure!");
+}
+</script>
+<input type='button' id='btnClick' value='Get Site Title'/>
+
+Call jsom code in Page Load in SharePoint Online
+-------------------------------------------------------------------------------
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+ExecuteOrDelayUntilScriptLoaded(myFunction,'sp.js');
+function myFunction()
+{
+//Your jsom code will be here
+var clientContext = new SP.ClientContext.get_current();
+site=clientContext.get_web();
+clientContext.load(site);
+clientContext.executeQueryAsync(success, failure);
+}
+function success() {
+alert(site.get_title());
+}
+function failure() {
+alert("Failure!");
+}
+</script>
 
