@@ -1,0 +1,30 @@
+Sub LoopThroughSites()
+
+Dim iCounter As Integer
+Dim sURL As String
+
+For iCounter = 1 To ActiveCell.SpecialCells(xlCellTypeLastCell).Row
+sURL = Sheets("SiteList").Cells(iCounter, 1).Value
+AddQuery (sURL)
+Next iCounter
+
+End Sub
+
+Function AddQuery(ByVal sURL As String)
+
+Dim sName As String, sFormula As String
+
+    sName = Right(sURL, Len(sURL) -     Len("https://xxxxx.sharepoint.com/teams/xxx/"))
+
+    sFormula = "let" & Chr(13) & "" & Chr(10) & "    Source = #""Func:CallSharepointListData""(""" & sURL & """)" & Chr(13) & "" & Chr(10) & "in" & Chr(13) & "" & Chr(10) & "    Source"
+
+    ActiveWorkbook.Queries.Add Name:=sName, Formula:=sFormula
+
+Workbooks("Lists Data Queries.xlsm").Connections.Add2 _
+    "Query - " & sName, _
+    "Connection to the 'Invoked FunctionFunc:CallSharepointListData' query in the workbook." _
+    , Array( _
+    "OLEDB;Provider=Microsoft.Mashup.OleDb.1;Data Source=$Workbook$;Location=" & sName & ";Extended Propert" _
+    , "ies="""""), "SELECT * FROM [" & sName & "]", 2
+
+End Function
