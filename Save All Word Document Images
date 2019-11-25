@@ -1,0 +1,75 @@
+Sub SaveAllImages()
+'
+' SaveAllImages Macro
+' Author T. Patrick Bailey
+'
+    'Full File name, used to reopen the original file
+    FileName = ActiveDocument.FullName
+
+    'This is the name I am going to prepend on my image files
+    '(mine is based on the original documents name
+    prePendFileName = Left(ActiveDocument.Name, Len(ActiveDocument.Name) - 5)
+    prePendFileName = Right(prePendFileName, Len(prePendFileName) - 11)
+
+    'Location where to save the file to
+    saveLocaton = "D:\pictures\"
+   
+    'Today's date formated
+    TodayDateString = Year(Date) & "_"
+    If Month(Date) < 10 Then
+        TodayDateString = TodayDateString & "0"
+    End If
+    TodayDateString = TodayDateString & Month(Date) & "_"
+   
+    If Day(Date) < 10 Then
+        TodayDateString = TodayDateString & "0"
+    End If
+    TodayDateString = TodayDateString & Day(Date)
+   
+   
+    'Folder name
+    FolderName = TodayDateString & "_" & prePendFileName
+
+    MsgBox "Saving Images to " & saveLocaton & FolderName & "_files"
+   
+    'Delete the folder if it exists
+    On Error Resume Next
+    Kill saveLocaton & FolderName & "_files\*"  'Delete all files
+    RmDir saveLocation & FolderName & "_files"  'Delete folder
+   
+    'First Save the current document as is
+    ActiveDocument.Save
+   
+    'Save file as an html file
+    ActiveDocument.SaveAs2 FileName:=saveLocaton & FolderName & ".html", _
+       FileFormat:=wdFormatHTML
+
+    ActiveDocument.Close
+    'Delete files that are not images
+    Kill saveLocaton & FolderName & ".html"
+    Kill saveLocaton & FolderName & "_files\*.xml"
+    Kill saveLocaton & FolderName & "_files\*.html"
+    Kill saveLocaton & FolderName & "_files\*.thmx"
+   
+    'Rename image Files
+    'This is written for files with 99 or fewer images
+    For x = 1 To 9
+        Name saveLocaton & FolderName & "_files\image00" _
+        & x & ".png" As saveLocaton & FolderName & "_files\" _
+        & prePendFileName & "_00" & x & ".png"
+    Next
+   
+    For x = 10 To 99
+        Name saveLocaton & FolderName & "_files\image0" _
+        & x & ".png" As saveLocaton & FolderName _
+        & "_files\" & prePendFileName & "_0" & x & ".png"
+    Next
+   
+    'Reopen the file as a word document
+    Word.Documents.Open (FileName)
+   
+    'Set Word to be the active (on top) program
+    Word.Application.Visible = True
+    Word.Application.Activate
+   
+End Sub
