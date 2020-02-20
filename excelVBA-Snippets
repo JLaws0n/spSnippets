@@ -1,0 +1,351 @@
+Sub finalRowCt()
+i = Cells(Rows.Count, 3).End(xlUp).Row
+Range("C" & i).Select
+End Sub
+Sub findCell()
+Range("BE10").Select
+End Sub
+
+Sub finalColCt()
+i = Cells(1, Columns.Count).End(xlToLeft).Row
+
+End Sub
+
+Sub formatTaskAssignments()
+'
+''
+'    finalRow = Cells(Rows.Count, 3).End(xlUp).Row
+'    finalCol = Cells(256, Columns.Count).End(xlToLeft).Row
+'    fCol = 6
+'    lCol = 256
+'    i = 6
+''    Range("C12").Select
+'
+'
+'    Do
+'        Range("C" & i).Select
+'        ActiveCell.Replace What:="01-Proposal Development", Replacement:= _
+'        "01-Proposal Development", LookAt:=xlPart, SearchOrder:=xlByColumns, _
+'        MatchCase:=False, SearchFormat:=False, ReplaceFormat:=True
+'        Cells.Find(What:="01-Proposal Development", After:=ActiveCell, LookIn:= _
+'        xlFormulas, LookAt:=xlPart, SearchOrder:=xlByColumns, SearchDirection:= _
+'        xlNext, MatchCase:=False, SearchFormat:=False).Activate
+'        i = i + 1
+'
+'    Loop While i <> finalRow
+    
+End Sub
+
+Sub TopLevelTasks()
+'Formats Top Task Rows to lite green
+
+'
+    finalRow = Cells(Rows.Count, 3).End(xlUp).Row
+    finalCol = Cells(1, Columns.Count).End(xlToLeft).Row
+    For i = 2 To finalRow
+        ' Check to see if column 3 is contains "01-Proposal Development"
+        If Range("C" & i) = "01-Proposal Development" Then
+            ' If it is True, color the range from A:IV256 of this row to be Lite Green (ColorIndex = 4)
+            With Cells(i, 1).Resize(1, Columns.Count).Interior
+                 .ColorIndex = 4
+                 .Pattern = xlSolid
+            End With
+    End If
+    Next i
+
+    
+    
+Range("A6").Select
+End Sub
+Sub topTaskConditionFormats()
+    finalRow = Cells(Rows.Count, 3).End(xlUp).Row
+    finalCol = Cells(1, Columns.Count).End(xlToLeft).Row
+    For i = 7 To finalRow
+        ' Check to see if column 3 is contains "01-Proposal Development"
+        If Range("M" & i) = "01-Proposal Development" Then
+        With Range("M" & i).Select
+            Range(Selection, Selection.End(xlToRight)).Select
+            Range("M" & i).Select
+            Range(Selection, Selection.End(xlToRight)).Select
+            Selection.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+            End With
+        End If
+        i = i + 6
+    Next i
+        Range(Selection, Selection.End(xlToRight)).Select
+    Selection.Copy
+    Range("M13").Select
+    Range(Selection, Selection.End(xlToRight)).Select
+    Selection.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, _
+        SkipBlanks:=False, Transpose:=False
+    
+    
+Range("A6").Select
+End Sub
+Sub whiteTextOpp()
+finalRow = Cells(Rows.Count, 3).End(xlUp).Row
+    finalCol = Cells(1, Columns.Count).End(xlToLeft).Row
+    For i = 7 To finalRow
+        ' Check to see if column 3 is contains "01-Proposal Development"
+        If Range("M" & i) = "01-Proposal Development" Then
+        With Range("B" & i).Select
+            Range(Selection, Selection.End(xlToRight)).Select
+            Range("M" & i).Select
+            Range(Selection, Selection.End(xlToRight)).Select
+            Selection.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, SkipBlanks:=False, Transpose:=False
+            End With
+        End If
+        i = i + 6
+    Next i
+        Range(Selection, Selection.End(xlToRight)).Select
+    Selection.Copy
+    Range("M13").Select
+    Range(Selection, Selection.End(xlToRight)).Select
+    Selection.PasteSpecial Paste:=xlPasteFormats, Operation:=xlNone, _
+        SkipBlanks:=False, Transpose:=False
+    
+    
+Range("A6").Select
+End Sub
+
+Sub formatOpportunity()
+'Bolds Opportunity Number, Group and Type (Column B)
+
+finalRow = Cells(Rows.Count, 3).End(xlUp).Row
+finalCol = Cells(1, Columns.Count).End(xlToLeft).Row
+
+ For i = 2 To finalRow
+        If Range("C" & i) = "01-Proposal Development" Then
+        With Range("B" & i).Select
+        Selection.Font.Bold = True
+        End With
+        Else
+        With Range("B" & i).Select
+        Selection.ClearContents
+        End With
+End If
+Next i
+Range("A6").Select
+End Sub
+Sub formatTasks()
+
+'This subProcedure formats "01-Proposal Development as bold
+
+finalRow = Cells(Rows.Count, 3).End(xlUp).Row
+finalCol = Cells(1, Columns.Count).End(xlToLeft).Row
+
+ For i = 2 To finalRow
+        If Range("C" & i) = "01-Proposal Development" Then
+        With Range("C" & i).Select
+        Selection.Font.Bold = True
+        End With
+
+End If
+Next i
+Range("A6").Select
+End Sub
+
+Sub taskDuration()
+'Places Task Duration Forumla in Column G
+finalRow = Cells(Rows.Count, 3).End(xlUp).Row
+finalCol = Cells(1, Columns.Count).End(xlToLeft).Row
+
+ 
+        If Range("C" & i) = "01-Proposal Development" Then
+        With Range("G" & i).Select
+        ActiveCell.ClearContents
+        ActiveCell.Replace What:="", Replacement:="=MAX(F" & (i + 1) & ":" & "F" & (i + 5) & ")-" & "E" & i
+        Selection.NumberFormat = "0"
+        End With
+
+        
+End If
+i = i + 5
+Next i
+Range("G6").Select
+End Sub
+Sub percentComplete()
+'Places % Complete formula in Column H
+finalRow = Cells(Rows.Count, 3).End(xlUp).Row
+finalCol = Cells(1, Columns.Count).End(xlToLeft).Row
+
+'=SUMPRODUCT(Duration[Gi]+ 1:Duration[Gi]+5,% Complete[Hi]:% Complete[Hi]+5)/SUM(Duration[Gi]+ 1:Duration[Gi]+5)
+
+ For i = 7 To finalRow
+        If Range("C" & i) = "01-Proposal Development" Then
+        With Range("H" & i).Select
+        ActiveCell.ClearContents
+        ActiveCell.Replace What:="", Replacement:="=SUMPRODUCT(G" & (i + 1) & ":" & "G" & (i + 5) & "," & "H" & (i + 1) & ":" & "H" & (i + 5) & ")/SUM(G" & (i + 1) & ":" & "G" & (i + 5) & ")"
+        Selection.NumberFormat = "0%"
+        End With
+End If
+i = i + 5
+Next i
+Range("H6").Select
+End Sub
+
+Sub taskDurations()
+finalRow = Cells(Rows.Count, 3).End(xlUp).Row
+finalCol = Cells(1, Columns.Count).End(xlToLeft).Row
+Size = 7
+For i = 8 To finalRow
+pSize = "B" & Size
+
+'======================================================================
+    Select Case Range("D" & i).Value
+        'Sr Proposal Manager - Large Hrs = 190, Days = 24
+        Case 190
+            Range("G" & i) = 24
+        'Sr Proposal Manager - Small Hrs = 59, Days = 7
+        Case 59
+            Range("G" & i) = 7
+        'Sr Proposal Manager - Medium Hrs = 117, Days = 15
+        Case 117
+            Range("G" & i) = 15
+'======================================================================
+        'Jr Proposal Manager - Large Hrs = 217.5, Days = 27
+        Case 217.5
+            Range("G" & i) = 27
+        'Jr Proposal Manager - Small Hrs = 69.5, Days = 9
+        Case 69.5
+            Range("G" & i) = 9
+        'Jr Proposal Manager - Medium Hrs = 140.5, Days = 18
+        Case 140.5
+            Range("G" & i) = 18
+'======================================================================
+        'Proposal Coordinator - Large Hrs = 156.5, Days = 20
+        Case 156.5
+            Range("G" & i) = 20
+        'Proposal Coordinator - Small Hrs = 45, Days = 6
+        Case 45
+            Range("G" & i) = 6
+        'Proposal Coordinator - Medium Hrs = 83, Days = 10
+        Case 83
+            Range("G" & i) = 10
+'======================================================================
+        'Sr Technical Editor - Large Hrs = 104, Days = 13
+        Case 104
+            Range("G" & i) = 13
+        'Sr Technical Editor - Small Hrs = 23, Days = 3
+        Case 23
+            Range("G" & i) = 3
+        'Sr Technical Editor - Medium Hrs = 66, Days = 8
+        Case 66
+            Range("G" & i) = 8
+'======================================================================
+        'Graphic Artist - Large Hrs = 118, Days = 15
+        Case 118
+            Range("G" & i) = 15
+        'Graphic Artist - Small Hrs = 59, Days = 7
+        Case 59
+            Range("G" & i) = 7
+        'Graphic Artist - Medium Hrs = 73, Days = 9
+        Case 73
+            Range("G" & i) = 9
+'======================================================================
+    End Select
+Next i
+Size = Size + 6
+Range("B6").Select
+End Sub
+Sub ganttLineTopTasks()
+
+finalRow = Cells(Rows.Count, 3).End(xlUp).Row
+finalCol = Cells(1, Columns.Count).End(xlToLeft).Row
+
+rwNumber = 7
+For clNumber = 13 To 252
+' Cell can be obtained through
+Cells(rwNumber, clNumber).Select
+'With Cells(rwNumber, clNumber).Resize(clNumber, clNumber + 3).Interior
+'    Selection.FormatConditions.Add Type:=xlExpression, Formula1:="=M$3=$F$2"
+'    Selection.FormatConditions(1).Font.ColorIndex = xlAutomatic
+'    Selection.FormatConditions(1).Interior.ColorIndex = 3
+'    Selection.FormatConditions.Add Type:=xlExpression, Formula1:="=AND(N$3>=$E769,N$3<$E769+$J7)"
+'    Selection.FormatConditions(2).Interior.ColorIndex = 37
+'    Selection.FormatConditions.Add Type:=xlExpression, Formula1:="=AND(N$3>=$E769,N$3<=$E769+$G769-1)"
+'    Selection.FormatConditions(3).Interior.ColorIndex = 16
+
+With Cells(rwNumber, clNumber).Resize(clNumber, 4).Interior
+    .ColorIndex = 2
+    .Pattern = xlSolid
+End With
+clNumber = clNumber + 4
+Next clNumber
+Cells(7, 13).Select
+'Next rwNumber
+
+''Cells(7, 13).Select
+'For i = 13 To finalCol
+'If i < finalCol = "" Then
+'With Cells(7, i).Select
+'Selection.Active
+'End With
+''i = i + 1
+'End If
+'''
+''End With
+'''        For i = 7 To finalRow
+''
+''
+'Next i
+'        If Cells(6, i) = "01-Proposal Development" Then
+'        With Range("H" & i).Select
+'        ActiveCell.ClearContents
+'        ActiveCell.Replace What:="", Replacement:="=SUMPRODUCT(G" & (i + 1) & ":" & "G" & (i + 5) & "," & "H" & (i + 1) & ":" & "H" & (i + 5) & ")/SUM(G" & (i + 1) & ":" & "G" & (i + 5) & ")"
+'        Selection.NumberFormat = "0%"
+'End With
+'
+'    Selection.FormatConditions.Delete
+'    Selection.FormatConditions.Add Type:=xlExpression, Formula1:="=N$3=$F$2"
+'    Selection.FormatConditions(1).Font.ColorIndex = xlAutomatic
+'    Selection.FormatConditions(1).Interior.ColorIndex = 3
+'    Selection.FormatConditions.Add Type:=xlExpression, Formula1:= _
+'        "=AND(N$3>=$E769,N$3<$E769+$J7)"
+'    Selection.FormatConditions(2).Interior.ColorIndex = 37
+'    Selection.FormatConditions.Add Type:=xlExpression, Formula1:= _
+'        "=AND(N$3>=$E769,N$3<=$E769+$G769-1)"
+'    Selection.FormatConditions(3).Interior.ColorIndex = 16
+End Sub
+
+Sub formatColConditions()
+fCol = 13
+finalRow = Cells(Rows.Count, 3).End(xlUp).Row
+Dim NoOfRowNeeded As Integer
+NoOfRowNeeded = finalRow
+For j = 7 To NoOfRowNeeded
+cellSelect = "j, fcol"
+'column & CStr(j)
+
+Range(cellSelect).Select
+Selection.FormatConditions.Delete
+If j < finalRow Then
+'    Selection.FormatConditions.Delete
+'    Selection.FormatConditions.Add Type:=xlExpression, Formula1:="=N$3=$F$2"
+'    Selection.FormatConditions(1).Font.ColorIndex = xlAutomatic
+'    Selection.FormatConditions(1).Interior.ColorIndex = 3
+'    Selection.FormatConditions.Add Type:=xlExpression, Formula1:= _
+'        "=AND(N$3>=$E769,N$3<$E769+$J7)"
+'    Selection.FormatConditions(2).Interior.ColorIndex = 37
+'    Selection.FormatConditions.Add Type:=xlExpression, Formula1:= _
+'        "=AND(N$3>=$E769,N$3<=$E769+$G769-1)"
+'    Selection.FormatConditions(3).Interior.ColorIndex = 16
+
+'maximum 3 formula allowed.
+Selection.FormatConditions.Add Type:=xlExpression, Formula1:= _
+"=INT(" & Column & CStr(j - 1) & ")"
+Selection.FormatConditions(1).Interior.ColorIndex = 3
+Selection.FormatConditions.Add Type:=xlExpression, Formula1:= _
+"=INT(" & Column & CStr(j - 1) & ")>INT(" & Column & CStr(j) & ")"
+Selection.FormatConditions(2).Interior.ColorIndex = 6
+
+Selection.FormatConditions.Add Type:=xlExpression, Formula1:= _
+"=INT(" & Column & CStr(j - 1) & ")=INT(" & Column & CStr(j) & ")"
+Selection.FormatConditions(3).Interior.ColorIndex = 4
+
+
+
+
+End If
+Next j
+End Sub
