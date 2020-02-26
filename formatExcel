@@ -1,0 +1,5 @@
+Sub MoveColumnBDemo()
+Columns(6).EntireColumn.Insert
+Range("F:F").Value = Range("B:B").Value
+Columns(2).EntireColumn.Delete
+End Sub
