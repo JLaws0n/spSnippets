@@ -1,0 +1,18 @@
+Mapping Network Drive
+\\office4pros.sharepoint.com@SSL\DavWWWRoot
+
+Templates Library URL
+https://office4pros.sharepoint.com/_catalogs/lt/Forms/AllItems.aspx
+
+Page Edit Mode
+
+https://office4pros.sharepoint.com/Pages/Site-Collection-Documents.aspx?ControlMode=Edit&DisplayMode=Design
+
+Other Options
+
+Browse & Display Mode = Default Mode	........Documents.aspx?ControlMode=Browse&DisplayMode=Browse?
+BrowseDisplayMode: Represents the default display mode.
+CatalogDisplayMode: Used for adding controls from a catalog of controls to a web page.
+ConnectDisplayMode: Displays a special UI for users to manage connections between Web Part controls.
+DesignDisplayMode: Used for changing the layout of web pages containing Web Part controls.
+EditDisplayMode: Displays a UI from which end users can edit and modify server contro
